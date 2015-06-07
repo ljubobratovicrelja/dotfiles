@@ -1,3 +1,5 @@
+filetype off
+
 set rtp+=~/.vim/bundle/Vundle.vim
 set rtp+=~/.vim/bundle/vim-dutyl
 set rtp+=/usr/local/lib/python2.7/dist-packages/powerline/bindings/vim
@@ -34,10 +36,10 @@ set cindent
 set cinoptions=g-1
 set list
 set listchars=tab:▸\ ,eol:¬
+set foldmethod=manual
+set clipboard=unnamedplus
 
 syntax on
-filetype indent on
-filetype plugin on
 set t_Co=256
 set background=light
 colorscheme seoul256
@@ -45,6 +47,14 @@ colorscheme seoul256
 highlight Normal ctermbg=NONE
 highlight nonText ctermbg=NONE
 
+map <up> <nop>
+map <down> <nop>
+map <left> <nop>
+map <right> <nop>
+imap <up> <nop>
+imap <down> <nop>
+imap <left> <nop>
+imap <right> <nop>
 map <j> <k>
 map <k> <j>
 map <C-h> <C-w>h
@@ -54,22 +64,21 @@ map <C-l> <C-w>l
 map <Leader>d :bd<CR>
 nmap , :bp<CR>
 nmap . :bn<CR>
-map <F4> :A<CR>
+map <F2> :A<CR>
 nmap <z> :undo
 nmap <Z> :redo
 nnoremap <b> <C-u>
 nnoremap <n> <C-e>
-nmap <silent> <Tab> :NERDTreeToggle<CR>
 inoremap <C-c> <CR><Esc>O
 nnoremap <silent> <F5> :!clear;python %<CR>
 map <C-e>E :e ~/.vimrc<CR>
 nmap <C-o> o<Esc>
-nmap <C-O> O<Esc>
-" brackets new line
 inoremap {<CR> {<CR>}<Esc>O
-" got o end of line in insert, for jump out of brackets
-inoremap <C-e> <C-o>A
+inoremap <C-e> <Esc>A
 nmap <leader>l :set list!<CR>
+nmap <leader>vs :vsp<CR>
+nmap <leader>s :split<CR>
+nnoremap ; :
 
 Bundle 'gmarik/Vundle.vim'
 Bundle 'Raimondi/delimitMate'
@@ -79,7 +88,26 @@ Bundle 'jlanzarotta/bufexplorer'
 Bundle 'Hackerpilot/DCD', {'rtp': 'editors/vim'}
 Bundle 'altercation/vim-colors-solarized'
 Bundle 'SirVer/ultisnips'
-"Bundle 'honza/vim-snippets'
+Bundle 'honza/vim-snippets'
+Bundle 'szw/vim-tags'
+
+" Setup NERDTree
+
+let g:NERDTreeWinPos = "left"
+let NERDTreeIgnore=['\.DS_Store$','\.pyc$', '\.xls$','\.zip$','\.pdf$','\.nav$','\.snm$','.\toc$','\.vrb$','\.aux$' , '\.git$', '\.db$', '\.ropeproject', '\.so$', '\.un\~$', '\.lein-plugins$', '\.beam$']
+let NERDTreeHighlightCursorline=1
+let NERDTreeShowBookmarks=1
+let NERDTreeShowHidden=0
+let NERDTreeDirArrows = 1
+
+nmap <silent> <F4> :NERDTreeToggle<CR>
+nmap <silent> <F3> :TlistToggle<CR>
+
+if has("autocmd")
+    autocmd Filetype nerdtree setlocal nolist
+endif
+
+" Setup UltiSnips
 
 function! g:UltiSnips_Complete()
     call UltiSnips#ExpandSnippet()
@@ -98,16 +126,21 @@ endfunction
 
 au BufEnter * exec "inoremap <silent> " . g:UltiSnipsExpandTrigger . " <C-R>=g:UltiSnips_Complete()<cr>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"
-let g:UltiSnipsListSnippets="<c-e>"
+let g:UltiSnipsListSnippets="<c-l>"
 " this mapping Enter key to <C-y> to chose the current highlight item 
 " and close the selection list, same as other IDEs.
 " CONFLICT with some plugins like tpope/Endwise
 inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 
+autocmd Filetype python :UltiSnipsAddFiletypes python
+autocmd Filetype html :UltiSnipsAddFiletypes html
+autocmd Filetype d :UltiSnipsAddFiletypes d
+autocmd Filetype c :UltiSnipsAddFiletypes c
+autocmd Filetype cpp :UltiSnipsAddFiletypes cpp
 
 
-" YouCompleteMe options
-"
+" Setup YouCompleteMe
+
 let g:ycm_register_as_syntastic_checker = 1
 
 "YCM will put icons in Vim's gutter on lines that have a diagnostic set.
@@ -134,4 +167,10 @@ let g:ycm_filetype_whitelist = { '*': 1 }
 let g:dcd_path = '/home/relja/DCD/bin/'
 let g:dcd_importPath=['/usr/include/d']
 
+nmap <Leader>dcd :DCDstartServer<CR>
+nmap <Leader>ndc :DCDstopServer<CR>
+map  <F12> :DCDsymbolLocation<CR>
+
 set omnifunc=syntaxComplete#complete
+
+filetype plugin indent on
