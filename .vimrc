@@ -12,6 +12,7 @@ endif
 " register Vundle
 call vundle#rc()
 
+set exrc
 set laststatus=2
 set secure
 set number
@@ -46,6 +47,12 @@ colorscheme seoul256
 
 highlight Normal ctermbg=NONE
 highlight nonText ctermbg=NONE
+
+augroup CursorLine
+	au!
+	au VimEnter,WinEnter,BufWinEnter * setlocal cursorline
+	au WinLeave * setlocal nocursorline
+augroup END
 
 map <up> <nop>
 map <down> <nop>
@@ -100,9 +107,12 @@ let NERDTreeShowBookmarks=1
 let NERDTreeShowHidden=0
 let NERDTreeDirArrows = 1
 
+" NerdTree and TagList toggles
 nmap <silent> <F4> :NERDTreeToggle<CR>
 nmap <silent> <F3> :TlistToggle<CR>
-
+let Tlist_Use_Right_Window = 1
+" Tags
+let g:vim_tags_auto_generate = 1
 if has("autocmd")
     autocmd Filetype nerdtree setlocal nolist
 endif
@@ -137,7 +147,6 @@ autocmd Filetype html :UltiSnipsAddFiletypes html
 autocmd Filetype d :UltiSnipsAddFiletypes d
 autocmd Filetype c :UltiSnipsAddFiletypes c
 autocmd Filetype cpp :UltiSnipsAddFiletypes cpp
-
 
 " Setup YouCompleteMe
 
