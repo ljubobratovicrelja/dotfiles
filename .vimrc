@@ -39,6 +39,7 @@ set list
 set listchars=tab:▸\ ,eol:¬
 set foldmethod=manual
 set clipboard=unnamedplus
+set wildignore+=*.git,*.jpg,*.tif,*.png
 
 function ToggleNumbers()
 	if (&relativenumber == 1)
@@ -106,6 +107,9 @@ Bundle 'SirVer/ultisnips'
 Bundle 'honza/vim-snippets'
 Bundle 'szw/vim-tags'
 Bundle 'scrooloose/nerdcommenter'
+Bundle 'kien/ctrlp.vim'
+Bundle 'Lokaltog/vim-easymotion'
+Bundle 'vim-scripts/taglist.vim'
 
 " Setup NERDTree
 
