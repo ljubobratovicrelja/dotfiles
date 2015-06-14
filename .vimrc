@@ -15,7 +15,7 @@ call vundle#rc()
 set exrc
 set laststatus=2
 set secure
-set number
+set relativenumber
 set nobackup
 set noswapfile
 set nowritebackup
@@ -39,6 +39,14 @@ set list
 set listchars=tab:▸\ ,eol:¬
 set foldmethod=manual
 set clipboard=unnamedplus
+
+function ToggleNumbers()
+	if (&relativenumber == 1)
+		set number
+	else
+		set relativenumber
+	endif
+endfunction
 
 syntax on
 set t_Co=256
@@ -97,6 +105,7 @@ Bundle 'altercation/vim-colors-solarized'
 Bundle 'SirVer/ultisnips'
 Bundle 'honza/vim-snippets'
 Bundle 'szw/vim-tags'
+Bundle 'scrooloose/nerdcommenter'
 
 " Setup NERDTree
 
