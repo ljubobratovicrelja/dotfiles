@@ -39,6 +39,7 @@ set list
 set listchars=tab:▸\ ,eol:¬
 set foldmethod=manual
 set clipboard=unnamedplus
+set wildignore+=*.git,*.jpg,*.tif,*.png
 
 syntax on
 set t_Co=256
@@ -97,6 +98,9 @@ Bundle 'altercation/vim-colors-solarized'
 Bundle 'SirVer/ultisnips'
 Bundle 'honza/vim-snippets'
 Bundle 'szw/vim-tags'
+Bundle 'kien/ctrlp.vim'
+Bundle 'Lokaltog/vim-easymotion'
+Bundle 'vim-scripts/taglist.vim'
 
 " Setup NERDTree
 
