@@ -27,31 +27,19 @@ set encoding=utf-8
 set showcmd            " Show (partial) command in status line.
 set nowrap
 set showmatch          " Show matching brackets.
-set ignorecase         " Do case insensitive matching
-set smartcase          " Do smart case matching
-set incsearch          " Incremental search
-set autowrite          " Automatically save before commands like :next and
 set hidden             " Hide buffers when they are abandoned
 set mouse=a            " Enable mouse usage (all modes)
 set cindent
 set cinoptions=g-1
 set list
 set listchars=tab:▸\ ,eol:¬
-set foldmethod=manual
 set clipboard=unnamedplus
 set wildignore+=*.git,*.jpg,*.tif,*.png
-
-function ToggleNumbers()
-	if (&relativenumber == 1)
-		set number
-	else
-		set relativenumber
-	endif
-endfunction
+set number
+set norelativenumber
+set t_Co=256
 
 syntax on
-set t_Co=256
-set background=light
 colorscheme seoul256
 
 highlight Normal ctermbg=NONE
@@ -111,6 +99,8 @@ Bundle 'kien/ctrlp.vim'
 Bundle 'Lokaltog/vim-easymotion'
 Bundle 'vim-scripts/taglist.vim'
 
+" CtrlP
+nmap <C-P> :CtrlP .<CR>
 " Setup NERDTree
 
 let g:NERDTreeWinPos = "left"
