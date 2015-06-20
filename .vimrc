@@ -30,7 +30,7 @@ set showmatch          " Show matching brackets.
 set hidden             " Hide buffers when they are abandoned
 set mouse=a            " Enable mouse usage (all modes)
 set cindent
-set cinoptions=g-1
+"set cinoptions=g-1
 set list
 set listchars=tab:▸\ ,eol:¬
 set clipboard=unnamedplus
@@ -55,40 +55,34 @@ map <up> <nop>
 map <down> <nop>
 map <left> <nop>
 map <right> <nop>
-imap <up> <nop>
-imap <down> <nop>
-imap <left> <nop>
-imap <right> <nop>
-map <j> <k>
-map <k> <j>
 map <C-h> <C-w>h
 map <C-j> <C-w>j
 map <C-k> <C-w>k
 map <C-l> <C-w>l
-map <Leader>d :bd<CR>
+map <Leader><Leader>d :bd<CR>
+nmap < :tabprev<CR>
+nmap > :tabnext<CR>
 nmap , :bp<CR>
 nmap . :bn<CR>
-map <F2> :A<CR>
-nmap <z> :undo
-nmap <Z> :redo
-nnoremap <b> <C-u>
-nnoremap <n> <C-e>
+nmap <TAB> :A<CR>
 inoremap <C-c> <CR><Esc>O
 nnoremap <silent> <F5> :!clear;python %<CR>
 map <C-e>E :e ~/.vimrc<CR>
 nmap <C-o> o<Esc>
 inoremap {<CR> {<CR>}<Esc>O
 inoremap <C-e> <Esc>A
+inoremap <C-n> <Esc>jo
 nmap <leader>l :set list!<CR>
 nmap <leader>vs :vsp<CR>
 nmap <leader>s :split<CR>
+nmap <leader>ts :tab split<CR>
 nnoremap ; :
 
 Bundle 'gmarik/Vundle.vim'
-Bundle 'Raimondi/delimitMate'
+"Bundle 'Raimondi/delimitMate'
 Bundle 'Valloric/YouCompleteMe'
 Bundle 'scrooloose/nerdtree'
-Bundle 'jlanzarotta/bufexplorer'
+"Bundle 'jlanzarotta/bufexplorer'
 Bundle 'Hackerpilot/DCD', {'rtp': 'editors/vim'}
 Bundle 'altercation/vim-colors-solarized'
 Bundle 'SirVer/ultisnips'
