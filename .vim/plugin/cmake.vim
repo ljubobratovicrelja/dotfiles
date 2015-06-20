@@ -1,6 +1,9 @@
 " CMake project management plugin by Relja Ljubobratovic.
 " Writen to adopt my CMake development in VIM.
 
+if !exists("g:CMAKE_SAVE_BEFORE_BUILD")
+	let g:CMAKE_SAVE_BEFORE_BUILD=1
+endif
 if !exists("g:CMAKE_BUILD_TYPE")
 	let g:CMAKE_BUILD_TYPE="DEBUG" 
 endif
@@ -94,6 +97,9 @@ function! CMakeBuild()
 	let res =CMakeBuildCache()
 	if res == 0
 	execute "cd ".g:MAKE_BUILD_DIR
+		if g:CMAKE_SAVE_BEFORE_BUILD == 1:
+			exec "bufdo w!"
+		endif
 		execute "!make ".g:MAKE_ARGS
 		cd ../
 	else
