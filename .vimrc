@@ -1,5 +1,11 @@
 filetype off
 
+if has('nvim')
+	let s:editor_root=expand("~/.nvim")
+else
+	let s:editor_root=expand("~/.vim")
+endif
+
 set rtp+=~/.vim/bundle/Vundle.vim
 set rtp+=~/.vim/bundle/vim-dutyl
 set rtp+=/usr/local/lib/python2.7/dist-packages/powerline/bindings/vim
@@ -30,20 +36,20 @@ set showmatch          " Show matching brackets.
 set hidden             " Hide buffers when they are abandoned
 set mouse=a            " Enable mouse usage (all modes)
 set cindent
-"set cinoptions=g-1
-set list
+set cinoptions=g-1,N-s
+set nolist
 set listchars=tab:▸\ ,eol:¬
 set clipboard=unnamedplus
 set wildignore+=*.git,*.jpg,*.tif,*.png
+set nowrap
 set number
 set norelativenumber
 set t_Co=256
+colorscheme PaperColor
+hi Normal ctermbg=NONE
+hi NonText ctermbg=NONE
 
 syntax on
-colorscheme seoul256
-
-highlight Normal ctermbg=NONE
-highlight nonText ctermbg=NONE
 
 augroup CursorLine
 	au!
@@ -59,11 +65,9 @@ map <C-h> <C-w>h
 map <C-j> <C-w>j
 map <C-k> <C-w>k
 map <C-l> <C-w>l
-map <Leader><Leader>d :bd<CR>
+map <Leader><Leader>d :Bclose<CR>
 nmap < :tabprev<CR>
 nmap > :tabnext<CR>
-nmap , :bp<CR>
-nmap . :bn<CR>
 nmap <TAB> :A<CR>
 inoremap <C-c> <CR><Esc>O
 nnoremap <silent> <F5> :!clear;python %<CR>
@@ -76,6 +80,7 @@ nmap <leader>l :set list!<CR>
 nmap <leader>vs :vsp<CR>
 nmap <leader>s :split<CR>
 nmap <leader>ts :tab split<CR>
+nmap <leader>as :exec "%!astyle --indent=tab"<CR>
 nnoremap ; :
 
 Bundle 'gmarik/Vundle.vim'
@@ -92,9 +97,7 @@ Bundle 'scrooloose/nerdcommenter'
 Bundle 'kien/ctrlp.vim'
 Bundle 'Lokaltog/vim-easymotion'
 Bundle 'vim-scripts/taglist.vim'
-
-" CtrlP
-nmap <C-P> :CtrlP .<CR>
+Bundle 'Wutzara/vim-materialtheme'
 " Setup NERDTree
 
 let g:NERDTreeWinPos = "left"
@@ -154,8 +157,6 @@ let g:ycm_register_as_syntastic_checker = 1
 "highlighting
 let g:ycm_enable_diagnostic_signs = 1
 let g:ycm_enable_diagnostic_highlighting = 0
-let g:ycm_always_populate_location_list = 1 "default 0
-let g:ycm_open_loclist_on_ycm_diags = 1 "default 1
 
 let g:ycm_complete_in_strings = 1 "default 1
 let g:ycm_collect_identifiers_from_tags_files = 1 "default 0
