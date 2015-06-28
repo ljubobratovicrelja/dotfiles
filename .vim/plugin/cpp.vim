@@ -39,3 +39,25 @@ function! InitCppVimrc()
 		\'nmap <F8> :execute "!gdb -tui Build/' . l:currdir . '"<CR>']
 	call writefile(l:vimrc, ".vimrc", "a")
 endfunction
+
+function! CppSaveSession()
+	let l:currdir = GetCurrentDirName()
+	exec "mksession! " . l:currdir . ".vim"
+endfunction
+
+function! CppLoadSession()
+	let l:vimsession = GetCurrentDirName().".vim"
+	if filereadable(l:vimsession)
+		exec "so ".l:vimsession
+		exec "so ~/.vimrc"
+		if filereadable(".vimrc")
+			exec "so .vimrc"
+		endif
+		echo "Vim Session Loaded."
+	else
+		echo "Vim Session Not Found."
+	endif
+endfunction
+
+command! SaveSession :call CppSaveSession()
+command! LoadSession :call CppLoadSession()
