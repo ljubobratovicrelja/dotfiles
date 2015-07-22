@@ -4,11 +4,11 @@ if has('nvim')
 	let s:editor_root=expand("~/.nvim")
 else
 	let s:editor_root=expand("~/.vim")
+	set rtp+=/usr/local/lib/python2.7/dist-packages/powerline/bindings/vim
 endif
 
 set rtp+=~/.vim/bundle/Vundle.vim
 set rtp+=~/.vim/bundle/vim-dutyl
-set rtp+=/usr/local/lib/python2.7/dist-packages/powerline/bindings/vim
 
 " Source a global configuration file if available
 if filereadable("/etc/vim/vimrc.local")
@@ -45,9 +45,15 @@ set nowrap
 set number
 set norelativenumber
 set t_Co=256
+set spell spelllang=en_us
+
+set background=light
 colorscheme PaperColor
 hi Normal ctermbg=NONE
 hi NonText ctermbg=NONE
+
+set guioptions-=T
+set guioptions-=m
 
 syntax on
 
@@ -82,6 +88,8 @@ nmap <leader>s :split<CR>
 nmap <leader>ts :tab split<CR>
 nmap <leader>as :exec "%!astyle --indent=tab"<CR>
 nnoremap ; :
+nnoremap <C-]> :YcmCompleter GoTo<CR>
+nnoremap <C-LeftMouse> :YcmCompleter GoTo<CR>
 
 Bundle 'gmarik/Vundle.vim'
 "Bundle 'Raimondi/delimitMate'
