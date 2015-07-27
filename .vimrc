@@ -37,7 +37,7 @@ set hidden             " Hide buffers when they are abandoned
 set mouse=a            " Enable mouse usage (all modes)
 set cindent
 set cinoptions=g-1,N-s
-set nolist
+set list
 set listchars=tab:▸\ ,eol:¬
 set clipboard=unnamedplus
 set wildignore+=*.git,*.jpg,*.tif,*.png
@@ -46,11 +46,10 @@ set number
 set norelativenumber
 set t_Co=256
 set spell spelllang=en_us
+set pastetoggle=<F2>
 
-set background=light
+set background=dark
 colorscheme PaperColor
-hi Normal ctermbg=NONE
-hi NonText ctermbg=NONE
 
 set guioptions-=T
 set guioptions-=m
