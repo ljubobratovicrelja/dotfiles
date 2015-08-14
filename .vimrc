@@ -49,7 +49,7 @@ set spell spelllang=en_us
 set pastetoggle=<F2>
 
 set background=dark
-colorscheme PaperColor
+colorscheme seoul256
 
 set guioptions-=T
 set guioptions-=m
@@ -70,6 +70,8 @@ map <C-h> <C-w>h
 map <C-j> <C-w>j
 map <C-k> <C-w>k
 map <C-l> <C-w>l
+nmap <S-j> :m+<CR>
+nmap <S-k> :m-2<CR>
 map <Leader><Leader>d :Bclose<CR>
 nmap < :tabprev<CR>
 nmap > :tabnext<CR>
@@ -85,7 +87,7 @@ nmap <leader>l :set list!<CR>
 nmap <leader>vs :vsp<CR>
 nmap <leader>s :split<CR>
 nmap <leader>ts :tab split<CR>
-nmap <leader>as :exec "%!astyle --indent=tab"<CR>
+nmap <leader>as :exec "%!astyle --style=google --indent=tab"<CR>
 nnoremap ; :
 nnoremap <C-]> :YcmCompleter GoTo<CR>
 nnoremap <C-LeftMouse> :YcmCompleter GoTo<CR>
@@ -105,9 +107,13 @@ Bundle 'kien/ctrlp.vim'
 Bundle 'Lokaltog/vim-easymotion'
 Bundle 'vim-scripts/taglist.vim'
 Bundle 'Wutzara/vim-materialtheme'
+Bundle 'vim-scripts/TaskList.vim'
+Bundle 'tpope/vim-fugitive'
+
 " Setup NERDTree
 
 let g:NERDTreeWinPos = "left"
+let NERDTreeQuitOnOpen = 1
 let NERDTreeIgnore=['\.DS_Store$','\.pyc$', '\.xls$','\.zip$','\.pdf$','\.nav$','\.snm$','.\toc$','\.vrb$','\.aux$' , '\.git$', '\.db$', '\.ropeproject', '\.so$', '\.un\~$', '\.lein-plugins$', '\.beam$']
 let NERDTreeHighlightCursorline=1
 let NERDTreeShowBookmarks=1
@@ -176,6 +182,7 @@ let g:ycm_confirm_extra_conf = 1
 
 let g:ycm_goto_buffer_command = 'same-buffer' "[ 'same-buffer', 'horizontal-split', 'vertical-split', 'new-tab' ]
 let g:ycm_filetype_whitelist = { '*': 1 }
+let g:ycm_autoclose_preview_window_after_insertion = 1
 
 " Setup DCD
 let g:dcd_path = '/home/relja/DCD/bin/'
