@@ -30,3 +30,17 @@ end
 function reload_fish
 	source ~/.config/fish/config.fish
 end
+
+function new_desktop_launcher
+	gnome-desktop-item-edit --create-new ~/Desktop
+end
+
+function update
+	sudo apt-get update
+end
+
+function upgrade
+	sudo apt-get update
+	sudo apt-get upgrade
+	sudo apt-get dist-upgrade
+end

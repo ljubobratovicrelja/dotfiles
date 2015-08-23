@@ -1,5 +1,5 @@
 " CMake project management plugin by Relja Ljubobratovic.
-" Writen to adopt my CMake development in VIM.
+" Written to adopt my CMake development in VIM.
 
 if !exists("g:CMAKE_SAVE_BEFORE_BUILD")
 	let g:CMAKE_SAVE_BEFORE_BUILD=1
@@ -31,7 +31,7 @@ elseif g:MAKE_BUILD_DIR == ""
 	let g:MAKE_BUILD_DIR="Build"
 endif
 
-" Initialze the CMakeLists.txt for the current project.
+" Initialize the CMakeLists.txt for the current project.
 " ========================================================================================
 "
 function! CMakeInit()
@@ -86,7 +86,7 @@ function! CMakeBuildCache()
 	endif
 
 	execute "cd ".g:MAKE_BUILD_DIR
-	let cmargs = "!cmake " . g:CMAKE_ARGS ." -D CMAKE_CXX_COMPILER=" . g:CMAKE_CXX_COMPILER . " -D CMAKE_BUILD_TYPE=" .g:CMAKE_BUILD_TYPE . "-D CMAKE_CXX_FLAGS= " . g:CMAKE_CXX_FLAGS . " ../"
+	let cmargs = "!cmake " . g:CMAKE_ARGS ." -D CMAKE_CXX_COMPILER=" . g:CMAKE_CXX_COMPILER . " -D CMAKE_BUILD_TYPE=" .g:CMAKE_BUILD_TYPE . " -D CMAKE_CXX_FLAGS=" . g:CMAKE_CXX_FLAGS . " ../"
 	execute cmargs
 	cd ../
 	return 0
@@ -96,7 +96,7 @@ endfunction
 function! CMakeBuild()
 	let res =CMakeBuildCache()
 	if res == 0
-	execute "cd ".g:MAKE_BUILD_DIR
+		execute "cd ".g:MAKE_BUILD_DIR
 		if g:CMAKE_SAVE_BEFORE_BUILD == 1:
 			exec "bufdo w!"
 		endif

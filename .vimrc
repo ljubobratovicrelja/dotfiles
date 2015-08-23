@@ -18,43 +18,6 @@ endif
 " register Vundle
 call vundle#rc()
 
-set exrc
-set laststatus=2
-set secure
-set relativenumber
-set nobackup
-set noswapfile
-set nowritebackup
-set tabstop=4
-set softtabstop=4
-set shiftwidth=4
-set colorcolumn=120
-set encoding=utf-8
-set showcmd            " Show (partial) command in status line.
-set nowrap
-set showmatch          " Show matching brackets.
-set hidden             " Hide buffers when they are abandoned
-set mouse=a            " Enable mouse usage (all modes)
-set cindent
-set cinoptions=g-1,N-s
-set list
-set listchars=tab:▸\ ,eol:¬
-set clipboard=unnamedplus
-set wildignore+=*.git,*.jpg,*.tif,*.png
-set nowrap
-set number
-set norelativenumber
-set t_Co=256
-set spell spelllang=en_us
-set pastetoggle=<F2>
-
-set background=dark
-colorscheme seoul256
-
-set guioptions-=T
-set guioptions-=m
-
-syntax on
 
 augroup CursorLine
 	au!
@@ -195,3 +158,42 @@ map  <F12> :DCDsymbolLocation<CR>
 set omnifunc=syntaxComplete#complete
 
 filetype plugin indent on
+
+" Options
+set exrc
+set laststatus=2
+set secure
+set relativenumber
+set nobackup
+set noswapfile
+set nowritebackup
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
+set colorcolumn=120
+set encoding=utf-8
+set showcmd            " Show (partial) command in status line.
+set nowrap
+set showmatch          " Show matching brackets.
+set hidden             " Hide buffers when they are abandoned
+set mouse=a            " Enable mouse usage (all modes)
+set cindent
+set cinoptions=g-1,N-s
+set list
+set listchars=tab:▸\ ,eol:¬
+set clipboard=unnamedplus
+set wildignore+=*.git,*.jpg,*.tif,*.png
+set nowrap
+set number
+set norelativenumber
+set t_Co=256
+set spell spelllang=en_us
+set pastetoggle=<F2>
+
+set background=light
+colorscheme PaperColor
+
+set guioptions-=T
+set guioptions-=m
+
+syntax on
