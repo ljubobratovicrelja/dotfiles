@@ -12,6 +12,8 @@ set fish_path $HOME/.oh-my-fish
 Theme 'robbyrussell'
 Plugin 'theme'
 
+alias tmux='tmux -2'
+
 source /usr/local/lib/python2.7/dist-packages/powerline/bindings/fish/powerline-setup.fish
 
 
