@@ -72,6 +72,7 @@ Bundle 'vim-scripts/taglist.vim'
 Bundle 'Wutzara/vim-materialtheme'
 Bundle 'vim-scripts/TaskList.vim'
 Bundle 'tpope/vim-fugitive'
+Bundle 'rbgrouleff/bclose.vim'
 
 " Setup NERDTree
 
@@ -161,7 +162,7 @@ filetype plugin indent on
 
 " Options
 set exrc
-set laststatus=2
+set laststatus=0 " disable in favor of tmux
 set secure
 set relativenumber
 set nobackup
