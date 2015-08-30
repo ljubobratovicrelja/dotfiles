@@ -13,6 +13,8 @@ function! FnRun()
 			exec '!./Build/'.dir_name
 			echo dir_name
 		endif
+	elseif curren_ft == 'matlab' || curren_ft == 'octave'
+		execute '!octave '.bufname('%')
 	else
 		echo 'Run() Error!~ Unsupported filetype'
 	endif
