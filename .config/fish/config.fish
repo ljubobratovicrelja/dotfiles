@@ -1,5 +1,6 @@
 # Path to your oh-my-fish.
 set fish_path $HOME/.oh-my-fish
+set fish_greeting ""
 
 # Path to your custom folder (default path is ~/.oh-my-fish/custom)
 #set fish_custom $HOME/dotfiles/oh-my-fish
@@ -45,4 +46,8 @@ function upgrade
 	sudo apt-get update
 	sudo apt-get upgrade
 	sudo apt-get dist-upgrade
+end
+
+function install 
+	sudo apt-get install $argv
 end
