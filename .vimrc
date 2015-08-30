@@ -1,30 +1,16 @@
 filetype off
 
-if has('nvim')
-	let s:editor_root=expand("~/.nvim")
-else
-	let s:editor_root=expand("~/.vim")
-	set rtp+=/usr/local/lib/python2.7/dist-packages/powerline/bindings/vim
-endif
+" set shell to bash for Vundle
+set shell=/bin/bash
 
+" Powerline setup
+set rtp+=/usr/local/lib/python2.7/dist-packages/powerline/bindings/vim
+
+" Vundle setup
 set rtp+=~/.vim/bundle/Vundle.vim
-set rtp+=~/.vim/bundle/vim-dutyl
-
-" Source a global configuration file if available
-if filereadable("/etc/vim/vimrc.local")
-	source /etc/vim/vimrc.local
-endif
-
-" register Vundle
 call vundle#rc()
 
-
-augroup CursorLine
-	au!
-	au VimEnter,WinEnter,BufWinEnter * setlocal cursorline
-	au WinLeave * setlocal nocursorline
-augroup END
-
+" Mappings
 map <up> <nop>
 map <down> <nop>
 map <left> <nop>
@@ -56,10 +42,9 @@ nnoremap <C-]> :YcmCompleter GoTo<CR>
 nnoremap <C-LeftMouse> :YcmCompleter GoTo<CR>
 
 Bundle 'gmarik/Vundle.vim'
-"Bundle 'Raimondi/delimitMate'
 Bundle 'Valloric/YouCompleteMe'
 Bundle 'scrooloose/nerdtree'
-"Bundle 'jlanzarotta/bufexplorer'
+Bundle 'jlanzarotta/bufexplorer'
 Bundle 'Hackerpilot/DCD', {'rtp': 'editors/vim'}
 Bundle 'altercation/vim-colors-solarized'
 Bundle 'SirVer/ultisnips'
@@ -191,8 +176,8 @@ set t_Co=256
 set spell spelllang=en_us
 set pastetoggle=<F2>
 
-set background=light
-colorscheme PaperColor
+set background=dark
+colorscheme molokai
 
 set guioptions-=T
 set guioptions-=m
