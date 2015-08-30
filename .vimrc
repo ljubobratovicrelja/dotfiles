@@ -41,6 +41,11 @@ nnoremap ; :
 nnoremap <C-]> :YcmCompleter GoTo<CR>
 nnoremap <C-LeftMouse> :YcmCompleter GoTo<CR>
 
+" Octave syntax
+augroup filetypedetect
+  au! BufRead,BufNewFile *.m,*.oct set filetype=octave
+augroup END 
+
 
 Bundle 'gmarik/Vundle.vim'
 Bundle 'Valloric/YouCompleteMe'
@@ -144,7 +149,8 @@ nmap <Leader>dcd :DCDstartServer<CR>
 nmap <Leader>ndc :DCDstopServer<CR>
 map  <F12> :DCDsymbolLocation<CR>
 
-set omnifunc=syntaxComplete#complete
+"set omnifunc=syntaxComplete#complete
+set omnifunc=syntaxcomplete#Complete
 
 filetype plugin indent on
 
