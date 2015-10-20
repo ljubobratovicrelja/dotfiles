@@ -11,10 +11,11 @@ function! FnRun()
 			return
 		else
 			exec '!./Build/'.dir_name
-			echo dir_name
 		endif
 	elseif curren_ft == 'matlab' || curren_ft == 'octave'
 		execute '!octave '.bufname('%')
+	elseif curren_ft == 'd'
+		execute '!dub run'
 	else
 		echo 'Run() Error!~ Unsupported filetype'
 	endif
@@ -30,9 +31,14 @@ function! FnDebug()
 		if dir_name == ''
 			return
 		else
-			exec '!gdb -tui ./Build/'.dir_name
-			echo dir_name
+			exec '!cgdb ./Build/'.dir_name
 		endif
+	elseif curren_ft == 'd'
+		let curren_ft = GetCurrentDirName()
+		if dir_name == ''
+			return
+		else
+			exec '!cgdb ./' . dir_name
 	else
 		echo 'Debug() Error!~ Unsupported filetype'
 	endif
@@ -41,6 +47,8 @@ endfunction
 function! FnCompile()
 	if &ft == 'cpp' || &ft == 'c'
 		:CMakem
+	elseif &ft == 'd'
+		:!dub build
 	else
 		echo 'Compile() Error!~ Unsupported filetype'
 	endif
