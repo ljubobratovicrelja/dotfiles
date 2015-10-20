@@ -36,7 +36,10 @@ nmap <leader>l :set list!<CR>
 nmap <leader>vs :vsp<CR>
 nmap <leader>s :split<CR>
 nmap <leader>ts :tab split<CR>
-nmap <leader>as :exec "%!astyle --style=google --indent=tab"<CR>
+"nmap <leader>as :exec "%!astyle --style=google --indent=tab"<CR>
+nmap <leader>as :exec "%!astyle --style=allman"<CR>
+vnoremap <leader>r y :%sno/<c-r>0//g <left><left><left>
+vnoremap <leader><leader>r y :bufdo %sno/<c-r>0//g <left><left><left>
 nnoremap ; :
 nnoremap <C-]> :YcmCompleter GoTo<CR>
 nnoremap <C-LeftMouse> :YcmCompleter GoTo<CR>
@@ -66,6 +69,8 @@ Bundle 'tpope/vim-fugitive'
 Bundle 'rbgrouleff/bclose.vim'
 Bundle 'jscappini/material.vim'
 Bundle 'xero/sourcerer.vim'
+Bundle 'jansenm/vim-cmake'
+Bundle 'tikhomirov/vim-glsl'
 
 " Setup NERDTree
 
@@ -81,6 +86,7 @@ let NERDTreeDirArrows = 1
 nmap <silent> <F4> :NERDTreeToggle<CR>
 nmap <silent> <F3> :TlistToggle<CR>
 let Tlist_Use_Right_Window = 1
+
 " Tags
 let g:vim_tags_auto_generate = 1
 if has("autocmd")
@@ -156,9 +162,8 @@ filetype plugin indent on
 
 " Options
 set exrc
-set laststatus=2 " disable in favor of tmux
+set laststatus=2
 set secure
-set relativenumber
 set nobackup
 set noswapfile
 set nowritebackup
@@ -174,21 +179,24 @@ set hidden             " Hide buffers when they are abandoned
 set mouse=a            " Enable mouse usage (all modes)
 set cindent
 set cinoptions=g-1,N-s
-set list
-set listchars=tab:▸\ ,eol:¬
+set nolist
+" set listchars=tab:▸\ ,eol:¬
 set clipboard=unnamedplus
 set wildignore+=*.git,*.jpg,*.tif,*.png
 set nowrap
 set number
 set norelativenumber
 set t_Co=256
-set spell spelllang=en_us
+set nospell
 set pastetoggle=<F2>
 
+colorscheme material
 set background=dark
-colorscheme molokai
 
 set guioptions-=T
 set guioptions-=m
+
+hi CursorLine   cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=white
+hi CursorColumn cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=white
 
 syntax on
