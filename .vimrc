@@ -3,8 +3,8 @@ filetype off
 " set shell to bash for Vundle
 set shell=/bin/bash
 
-" Powerline setup
-set rtp+=/usr/local/lib/python2.7/dist-packages/powerline/bindings/vim
+" setup DCD plugin
+set rtp+=~/.vim/bundle/DCD
 
 " Vundle setup
 set rtp+=~/.vim/bundle/Vundle.vim
@@ -37,12 +37,10 @@ nmap <leader>vs :vsp<CR>
 nmap <leader>s :split<CR>
 nmap <leader>ts :tab split<CR>
 "nmap <leader>as :exec "%!astyle --style=google --indent=tab"<CR>
-nmap <leader>as :exec "%!astyle --style=allman"<CR>
+nmap <leader>as :exec "%!astyle --style=allman --indent=tab"<CR>
 vnoremap <leader>r y :%sno/<c-r>0//g <left><left><left>
 vnoremap <leader><leader>r y :bufdo %sno/<c-r>0//g <left><left><left>
 nnoremap ; :
-nnoremap <C-]> :YcmCompleter GoTo<CR>
-nnoremap <C-LeftMouse> :YcmCompleter GoTo<CR>
 
 " Octave syntax
 augroup filetypedetect
@@ -51,26 +49,29 @@ augroup END
 
 
 Bundle 'gmarik/Vundle.vim'
-Bundle 'Valloric/YouCompleteMe'
+
 Bundle 'scrooloose/nerdtree'
-Bundle 'jlanzarotta/bufexplorer'
-Bundle 'Hackerpilot/DCD', {'rtp': 'editors/vim'}
-Bundle 'altercation/vim-colors-solarized'
-Bundle 'SirVer/ultisnips'
-Bundle 'honza/vim-snippets'
-Bundle 'szw/vim-tags'
 Bundle 'scrooloose/nerdcommenter'
+Bundle 'jlanzarotta/bufexplorer'
 Bundle 'kien/ctrlp.vim'
 Bundle 'Lokaltog/vim-easymotion'
 Bundle 'vim-scripts/taglist.vim'
-Bundle 'Wutzara/vim-materialtheme'
 Bundle 'vim-scripts/TaskList.vim'
 Bundle 'tpope/vim-fugitive'
 Bundle 'rbgrouleff/bclose.vim'
-Bundle 'jscappini/material.vim'
-Bundle 'xero/sourcerer.vim'
+Bundle 'james9909/stackanswers.vim'
+
+Bundle 'Valloric/YouCompleteMe'
+Bundle 'altercation/vim-colors-solarized'
+Bundle 'SirVer/ultisnips'
+Bundle 'honza/vim-snippets'
 Bundle 'jansenm/vim-cmake'
 Bundle 'tikhomirov/vim-glsl'
+
+Bundle 'Wutzara/vim-materialtheme'
+Bundle 'jscappini/material.vim'
+Bundle 'NLKNguyen/papercolor-theme'
+Bundle 'xero/sourcerer.vim'
 
 " Setup NERDTree
 
@@ -147,13 +148,17 @@ let g:ycm_goto_buffer_command = 'same-buffer' "[ 'same-buffer', 'horizontal-spli
 let g:ycm_filetype_whitelist = { '*': 1 }
 let g:ycm_autoclose_preview_window_after_insertion = 1
 
-" Setup DCD
-let g:dcd_path = '/home/relja/DCD/bin/'
-let g:dcd_importPath=['/usr/include/d']
+" Setup dutyl
+let g:dcd_path = '/bin/'
+let g:dcd_importPath=['/usr/include/dlang/dmd/']
 
 nmap <Leader>dcd :DCDstartServer<CR>
 nmap <Leader>ndc :DCDstopServer<CR>
-map  <F12> :DCDsymbolLocation<CR>
+
+autocmd Filetype python nnoremap <C-]> :YcmCompleter GoTo<CR>
+autocmd Filetype c nnoremap <C-]> :YcmCompleter GoTo<CR>
+autocmd Filetype cpp nnoremap <C-]> :YcmCompleter GoTo<CR>
+autocmd Filetype d nnoremap <C-]> :DCDsymbolLocation<CR>
 
 "set omnifunc=syntaxComplete#complete
 set omnifunc=syntaxcomplete#Complete
@@ -162,7 +167,8 @@ filetype plugin indent on
 
 " Options
 set exrc
-set laststatus=2
+set laststatus=1
+
 set secure
 set nobackup
 set noswapfile
@@ -179,8 +185,8 @@ set hidden             " Hide buffers when they are abandoned
 set mouse=a            " Enable mouse usage (all modes)
 set cindent
 set cinoptions=g-1,N-s
-set nolist
-" set listchars=tab:▸\ ,eol:¬
+set list
+set listchars=tab:▸\ ,eol:¬
 set clipboard=unnamedplus
 set wildignore+=*.git,*.jpg,*.tif,*.png
 set nowrap
@@ -189,12 +195,14 @@ set norelativenumber
 set t_Co=256
 set nospell
 set pastetoggle=<F2>
+set backspace=2 " make backspace work like most other apps
+set cursorline!
 
-colorscheme material
-set background=dark
+colorscheme materialtheme
 
-set guioptions-=T
+set guifont=Consolas\ 12
 set guioptions-=m
+set guioptions-=T
 
 hi CursorLine   cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=white
 hi CursorColumn cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=white
