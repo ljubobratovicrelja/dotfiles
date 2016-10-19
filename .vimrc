@@ -3,12 +3,40 @@ filetype off
 " set shell to bash for Vundle
 set shell=/bin/bash
 
-" setup DCD plugin
-set rtp+=~/.vim/bundle/DCD
-
 " Vundle setup
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#rc()
+
+function! IsCurrChar(c)
+    let v = matchstr(getline('.'), '\%' . col('.') . 'c.')
+    return a:c == v
+endfunction
+
+function! IsCurrEmpty()
+    return IsCurrChar('') || IsCurrChar(' ') || IsCurrChar('\t') || IsCurrChar('\n')
+endfunction
+
+function! IsNextChar(c)
+    let v = matchstr(getline('.'), '\%' . (col('.')+1) . 'c.')
+    return a:c == v
+endfunction
+
+function! IsClosing()
+    let v = matchstr(getline('.'), '\%' . col('.') . 'c.')
+    if v == "\""
+        return 1
+    elseif v == "}"
+        return 1
+    elseif v == ")"
+        return 1
+    elseif v == "]"
+        return 1
+    endif
+
+    return 0
+endfunction
+
+command! Closing :call IsClosing()
 
 " Mappings
 map <up> <nop>
@@ -29,15 +57,33 @@ inoremap <C-c> <CR><Esc>O
 nnoremap <silent> <F5> :!clear;python %<CR>
 map <C-e>E :e ~/.vimrc<CR>
 nmap <C-o> o<Esc>
-inoremap {<CR> {<CR>}<Esc>O
+
+inoremap {<CR> <CR>{<CR>}<Esc>O
+inoremap <expr> " IsCurrChar("\"") ? "<Right>" : "\"\"<Esc>i"
+inoremap <expr> ' IsCurrChar("\'") ? "<Right>" : "\'\'<Esc>i" 
+inoremap <expr> [ IsCurrEmpty() ? "[]<Left>" : "["
+inoremap <expr> ( IsCurrEmpty() ? "()<Left>" : "("
+
+inoremap <expr> ] IsCurrChar("]") ? "<Right>" : "]"
+inoremap <expr> ) IsCurrChar(")") ? "<Right>" : ")"
+inoremap <expr> } IsCurrChar("}") ? "<Right>" : "}"
+
+vnoremap " s"<C-r>*"<Esc>
+vnoremap ' s'<C-r>*'<Esc>
+vnoremap [ s[<C-r>*]<Esc>
+vnoremap ( s(<C-r>*)<Esc>
+vnoremap { s{<CR><C-r>*<CR>}<Esc>
+
 inoremap <C-e> <Esc>A
 inoremap <C-n> <Esc>jo
+inoremap <expr> <Tab> :Closing ? "<Left>" : "<Tab>"
+
 nmap <leader>l :set list!<CR>
 nmap <leader>vs :vsp<CR>
 nmap <leader>s :split<CR>
 nmap <leader>ts :tab split<CR>
-"nmap <leader>as :exec "%!astyle --style=google --indent=tab"<CR>
-nmap <leader>as :exec "%!astyle --style=allman --indent=tab"<CR>
+nmap <leader>as :exec "%!astyle --style=google --indent=tab"<CR>
+"nmap <leader>as :exec "%!astyle --style=allman"<CR>
 vnoremap <leader>r y :%sno/<c-r>0//g <left><left><left>
 vnoremap <leader><leader>r y :bufdo %sno/<c-r>0//g <left><left><left>
 nnoremap ; :
@@ -60,6 +106,9 @@ Bundle 'vim-scripts/TaskList.vim'
 Bundle 'tpope/vim-fugitive'
 Bundle 'rbgrouleff/bclose.vim'
 Bundle 'james9909/stackanswers.vim'
+Bundle 'vim-airline/vim-airline'
+Bundle 'vim-airline/vim-airline-themes'
+Bundle 'KevinGoodsell/vim-csexact'
 
 Bundle 'Valloric/YouCompleteMe'
 Bundle 'altercation/vim-colors-solarized'
@@ -67,11 +116,25 @@ Bundle 'SirVer/ultisnips'
 Bundle 'honza/vim-snippets'
 Bundle 'jansenm/vim-cmake'
 Bundle 'tikhomirov/vim-glsl'
+Bundle 'vim-scripts/Conque-GDB'
+Bundle 'idanarye/vim-dutyl'
 
 Bundle 'Wutzara/vim-materialtheme'
 Bundle 'jscappini/material.vim'
 Bundle 'NLKNguyen/papercolor-theme'
 Bundle 'xero/sourcerer.vim'
+Bundle 'tomasr/molokai'
+Bundle 'joshdick/onedark.vim'
+Bundle 'lifepillar/vim-wwdc16-theme'
+Bundle 'tyrannicaltoucan/vim-deep-space'
+Bundle 'mtglsk/wikipedia.vim'
+Bundle 'lifepillar/vim-solarized8'
+Bundle 'vim-scripts/Visual-Studio'
+Bundle 'MvanDiemen/ghostbuster'
+Bundle 'cseelus/vim-colors-lucid'
+Bundle 'YorickPeterse/happy_hacking.vim'
+Bundle 'marciomazza/vim-brogrammer-theme'
+Bundle 'AlessandroYorba/Sierra'
 
 " Setup NERDTree
 
@@ -149,30 +212,49 @@ let g:ycm_filetype_whitelist = { '*': 1 }
 let g:ycm_autoclose_preview_window_after_insertion = 1
 
 " Setup dutyl
-let g:dcd_path = '/bin/'
-let g:dcd_importPath=['/usr/include/dlang/dmd/']
+call dutyl#register#tool('dcd-client','/home/relja/Packages/DCD/bin/dcd-client')
+call dutyl#register#tool('dcd-server','/home/relja/Packages/DCD/bin/dcd-server')
+call dutyl#register#tool('dscanner','/home/relja/Packages/dscanner/bin/dscanner')
+call dutyl#register#tool('dfix','/home/relja/Packages/dfix/bin/dfix')
+call dutyl#register#tool('dfmt','/home/relja/Packages/dfmt/bin/dfmt')
 
-nmap <Leader>dcd :DCDstartServer<CR>
-nmap <Leader>ndc :DCDstopServer<CR>
+function! LoadDMDIncludes()
+    let g:dutyl_stdImportPaths=['/usr/include/dmd/phobos', '/usr/include/dmd/druntime/import/']
+endfunction
+
+function! LoadLDCIncludes()
+    let g:dutyl_stdImportPaths=['/usr/local/include/d']
+endfunction
+
+call LoadLDCIncludes()
+
+nmap <Leader>dcd :DUDCDstartServer<CR>
+nmap <Leader>ndc :DUDCDstopServer<CR>
 
 autocmd Filetype python nnoremap <C-]> :YcmCompleter GoTo<CR>
 autocmd Filetype c nnoremap <C-]> :YcmCompleter GoTo<CR>
 autocmd Filetype cpp nnoremap <C-]> :YcmCompleter GoTo<CR>
-autocmd Filetype d nnoremap <C-]> :DCDsymbolLocation<CR>
+autocmd Filetype d nnoremap <C-]> :DUjump<CR>
+
+"autocmd Filetype d nmap <leader>as :exec "%!dfmt -i --brace_style=stroustrup --max_line_length=120 --soft_max_line_length=80"<CR>
+autocmd Filetype d nmap <leader>as :exec "%!dfmt -i --space_after_cast=false --max_line_length=120 --soft_max_line_length=100"<CR>
+autocmd Filetype cpp nmap <leader>as :exec "%!astyle --style=google --indent=tab"<CR>
+autocmd Filetype c nmap <leader>as :exec "%!astyle --style=google --indent=tab"<CR>
 
 "set omnifunc=syntaxComplete#complete
-set omnifunc=syntaxcomplete#Complete
+"set omnifunc=syntaxcomplete#Complete
 
 filetype plugin indent on
 
 " Options
 set exrc
-set laststatus=1
+set laststatus=2
 
 set secure
 set nobackup
 set noswapfile
 set nowritebackup
+set expandtab
 set tabstop=4
 set softtabstop=4
 set shiftwidth=4
@@ -185,22 +267,50 @@ set hidden             " Hide buffers when they are abandoned
 set mouse=a            " Enable mouse usage (all modes)
 set cindent
 set cinoptions=g-1,N-s
-set list
-set listchars=tab:▸\ ,eol:¬
+set list  
+set listchars=tab:▸-,eol:¬,trail:๐
 set clipboard=unnamedplus
 set wildignore+=*.git,*.jpg,*.tif,*.png
 set nowrap
 set number
-set norelativenumber
+set relativenumber
 set t_Co=256
 set nospell
 set pastetoggle=<F2>
 set backspace=2 " make backspace work like most other apps
 set cursorline!
+set spell spelllang=en_us
 
-colorscheme materialtheme
+"vim-airline
+if !exists('g:airline_symbols')
+  let g:airline_symbols = {}
+endif
 
-set guifont=Consolas\ 12
+let g:airline_powerline_fonts=1
+let g:airline_enable_branch=1
+let g:airline_theme="PaperColor"
+let g:airline_enable_syntastic=1
+let g:airline_detect_paste=1
+
+"Setup run plugin
+let g:compile_args='--compiler=ldc2'
+let g:run_args='--compiler=ldc2 --build=release'
+
+let g:release_args='--compiler=ldc2 --build=release'
+let g:debug_args='--compiler=ldc2 --build=debug'
+
+nmap <leader><leader>dd let g:compile_args=g:debug_args
+nmap <leader><leader>dr let g:compile_args=g:release_args
+
+if has("gui_running")
+	colorscheme onedark
+else
+	"colorscheme molokai
+    colorscheme deep-space
+    "colorscheme materialtheme
+endif
+
+set guifont=Liberation\ Mono\ for\ Powerline\ 13
 set guioptions-=m
 set guioptions-=T
 
@@ -208,3 +318,5 @@ hi CursorLine   cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=whi
 hi CursorColumn cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=white
 
 syntax on
+
+hi Normal ctermbg=NONE
