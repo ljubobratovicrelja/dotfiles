@@ -38,6 +38,8 @@ endfunction
 
 command! Closing :call IsClosing()
 
+let mapleader = " "
+
 " Mappings
 map <up> <nop>
 map <down> <nop>
@@ -82,7 +84,7 @@ nmap <leader>l :set list!<CR>
 nmap <leader>vs :vsp<CR>
 nmap <leader>s :split<CR>
 nmap <leader>ts :tab split<CR>
-nmap <leader>as :exec "%!astyle --style=google --indent=tab"<CR>
+nmap <leader>as :exec "%!astyle --style=google --indent=spaces"<CR>
 "nmap <leader>as :exec "%!astyle --style=allman"<CR>
 vnoremap <leader>r y :%sno/<c-r>0//g <left><left><left>
 vnoremap <leader><leader>r y :bufdo %sno/<c-r>0//g <left><left><left>
@@ -93,9 +95,9 @@ augroup filetypedetect
   au! BufRead,BufNewFile *.m,*.oct set filetype=octave
 augroup END 
 
+Bundle 'Vundle/Vundle.vim'
 
-Bundle 'gmarik/Vundle.vim'
-
+Bundle 'Valloric/YouCompleteMe'
 Bundle 'scrooloose/nerdtree'
 Bundle 'scrooloose/nerdcommenter'
 Bundle 'jlanzarotta/bufexplorer'
@@ -105,12 +107,7 @@ Bundle 'vim-scripts/taglist.vim'
 Bundle 'vim-scripts/TaskList.vim'
 Bundle 'tpope/vim-fugitive'
 Bundle 'rbgrouleff/bclose.vim'
-Bundle 'james9909/stackanswers.vim'
-Bundle 'vim-airline/vim-airline'
-Bundle 'vim-airline/vim-airline-themes'
-Bundle 'KevinGoodsell/vim-csexact'
 
-Bundle 'Valloric/YouCompleteMe'
 Bundle 'altercation/vim-colors-solarized'
 Bundle 'SirVer/ultisnips'
 Bundle 'honza/vim-snippets'
@@ -118,7 +115,7 @@ Bundle 'jansenm/vim-cmake'
 Bundle 'tikhomirov/vim-glsl'
 Bundle 'vim-scripts/Conque-GDB'
 Bundle 'idanarye/vim-dutyl'
-
+Bundle 'zah/nim.vim'
 Bundle 'Wutzara/vim-materialtheme'
 Bundle 'jscappini/material.vim'
 Bundle 'NLKNguyen/papercolor-theme'
@@ -147,7 +144,7 @@ let NERDTreeShowHidden=0
 let NERDTreeDirArrows = 1
 
 " NerdTree and TagList toggles
-nmap <silent> <F4> :NERDTreeToggle<CR>
+nmap <silent> <TAB> :NERDTreeToggle<CR>
 nmap <silent> <F3> :TlistToggle<CR>
 let Tlist_Use_Right_Window = 1
 
@@ -160,7 +157,7 @@ endif
 " Setup UltiSnips
 
 function! g:UltiSnips_Complete()
-    call UltiSnips#ExpandSnippet()
+   call UltiSnips#ExpandSnippet()
     if g:ulti_expand_res == 0
         if pumvisible()
             return "\<C-n>"
@@ -190,6 +187,7 @@ autocmd Filetype cpp :UltiSnipsAddFiletypes cpp
 
 " Setup YouCompleteMe
 
+let g:ycm_path_to_python_interpreter = '/usr/local/bin/python2'
 let g:ycm_register_as_syntastic_checker = 1
 
 "YCM will put icons in Vim's gutter on lines that have a diagnostic set.
@@ -238,8 +236,8 @@ autocmd Filetype d nnoremap <C-]> :DUjump<CR>
 
 "autocmd Filetype d nmap <leader>as :exec "%!dfmt -i --brace_style=stroustrup --max_line_length=120 --soft_max_line_length=80"<CR>
 autocmd Filetype d nmap <leader>as :exec "%!dfmt -i --space_after_cast=false --max_line_length=120 --soft_max_line_length=100"<CR>
-autocmd Filetype cpp nmap <leader>as :exec "%!astyle --style=google --indent=tab"<CR>
-autocmd Filetype c nmap <leader>as :exec "%!astyle --style=google --indent=tab"<CR>
+autocmd Filetype cpp nmap <leader>as :exec "%!astyle --style=google --indent=spaces"<CR>
+autocmd Filetype c nmap <leader>as :exec "%!astyle --style=google --indent=spaces"<CR>
 
 "set omnifunc=syntaxComplete#complete
 "set omnifunc=syntaxcomplete#Complete
@@ -264,12 +262,12 @@ set showcmd            " Show (partial) command in status line.
 set nowrap
 set showmatch          " Show matching brackets.
 set hidden             " Hide buffers when they are abandoned
-set mouse=a            " Enable mouse usage (all modes)
+set mouse=v
 set cindent
 set cinoptions=g-1,N-s
 set list  
 set listchars=tab:▸-,eol:¬,trail:๐
-set clipboard=unnamedplus
+set clipboard=unnamed
 set wildignore+=*.git,*.jpg,*.tif,*.png
 set nowrap
 set number
@@ -305,12 +303,12 @@ nmap <leader><leader>dr let g:compile_args=g:release_args
 if has("gui_running")
 	colorscheme onedark
 else
-	"colorscheme molokai
-    colorscheme deep-space
+	colorscheme molokai
+    "colorscheme deep-space
     "colorscheme materialtheme
 endif
 
-set guifont=Liberation\ Mono\ for\ Powerline\ 13
+set guifont=Meslo\ 13
 set guioptions-=m
 set guioptions-=T
 
